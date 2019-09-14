@@ -25,14 +25,14 @@ DaterangeSelector = function (attr) {
         
         dp.mousedown(function(e){
             dp_dragging = true;
-            begin_date = dateUnderCursor();
+            begin_date = dateUnderCursor($('.ui-state-hover'));
             $(".ui-state-hover").parent().addClass("within_selected_range");
         });
         
         dp.selectable({
             stop: function(event, ui) {
                 dp_dragging = false;
-                end_date = dateUnderCursor();
+                end_date = dateUnderCursor($('.ui-selected').last());
                 
                 if (typeof attr.start_date_selected !== 'undefined') {
                     var start = new Date(Math.min(begin_date, end_date));
@@ -71,8 +71,7 @@ DaterangeSelector = function (attr) {
     // Helpers
     
     
-    function dateUnderCursor() {
-        var a = $(".ui-state-hover");
+    function dateUnderCursor(a) {
         var td = a.parent();
         var is_day = (td.attr("data-handler") == "selectDay");
         if (is_day == true) {
